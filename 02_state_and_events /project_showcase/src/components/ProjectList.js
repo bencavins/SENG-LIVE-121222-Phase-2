@@ -11,7 +11,7 @@ const ProjectList = ({ projects }) => {
 
   const filteredProjects = projects.filter(project => {
     return project.name.toLowerCase()
-      .startsWith(searchQuery.toLowerCase())
+      .includes(searchQuery.toLowerCase())
   })
   const projectListItems = filteredProjects.map((project) => (
     <ProjectListItem key={project.id} {...project} />
