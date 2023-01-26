@@ -9,6 +9,7 @@ const ProjectList = ({ projects }) => {
   });
 
   const projectListItems = searchResults.map((project) => (
+    // <ProjectListItem key={project.id} project={project} />
     <ProjectListItem key={project.id} {...project} />
   ));
 

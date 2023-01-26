@@ -5,11 +5,18 @@ import ProjectForm from "./components/ProjectForm";
 import ProjectList from "./components/ProjectList";
 
 const App = () => {
+  // Inverse data flow
   const [projects, setProjects] = useState([]);
 
   // # Deliverable 1: Configure a <button> in our App 
   // that will use json-server to fetch projects 
   // and store them in state
+  function handleClick(event) {
+    fetch('http://localhost:4000/projects')
+      .then(resp => resp.json())
+      .then(projects => setProjects(projects))
+      .catch(error => console.log(error))
+  }
 
   // - Add an onClick event listener to the "Load Projects" 
   // button
@@ -23,7 +30,7 @@ const App = () => {
     <div className="App">
       <Header />
       <ProjectForm />
-      <button>Load Projects</button>
+      <button onClick={handleClick}>Load Projects</button>
       <ProjectList projects={projects} />
     </div>
   );
