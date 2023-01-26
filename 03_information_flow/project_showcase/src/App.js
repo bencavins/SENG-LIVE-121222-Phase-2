@@ -7,6 +7,7 @@ import ProjectList from "./components/ProjectList";
 const App = () => {
   // Inverse data flow
   const [projects, setProjects] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   // # Deliverable 1: Configure a <button> in our App 
   // that will use json-server to fetch projects 
@@ -26,9 +27,14 @@ const App = () => {
   // and set the `projects` state to the value 
   // returned by the response
 
+  const onToggleDarkMode = () => setIsDarkMode(value => !value);
+  const theme = isDarkMode ? "App" : "App light"
+
   return (
-    <div className="App">
-      <Header />
+    <div className={theme}>
+      <Header
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={onToggleDarkMode} />
       <ProjectForm />
       <button onClick={handleClick}>Load Projects</button>
       <ProjectList projects={projects} />

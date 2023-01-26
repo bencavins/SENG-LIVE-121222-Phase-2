@@ -1,10 +1,7 @@
 import { useState } from "react";
 
-const Header = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  const handleClick = () => setIsDarkMode(!isDarkMode);
-
+const Header = ({isDarkMode, onToggleDarkMode}) => {
+  
   const buttonTextContent = isDarkMode ? "Light Mode" : "Dark Mode";
 
   // Deliverable 2: Use Inverse Data flow to implement 
@@ -27,7 +24,7 @@ const Header = () => {
         <span className="logo">{"//"}</span>
         Project Showcase
       </h1>
-      <button onClick={handleClick}>{buttonTextContent}</button>
+      <button onClick={onToggleDarkMode}>{buttonTextContent}</button>
     </header>
   );
 };
