@@ -1,10 +1,10 @@
-import { useState } from "react";
+import {useState} from 'react';
 
 const ProjectListItem = ({ id, about, image, link, name, phase }) => {
   const [clapCount, setClapCount] = useState(0)
 
-  function handleClick(event) {
-    setClapCount(prevValue => prevValue + 1)
+  function handleClick() {
+    setClapCount(prevValue => prevValue+1)
   }
 
   return (
