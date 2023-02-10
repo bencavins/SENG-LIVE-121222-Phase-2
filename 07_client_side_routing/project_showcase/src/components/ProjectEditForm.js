@@ -3,6 +3,9 @@
 
 import React, { useState, useEffect } from "react";
 
+import { useParams } from "react-router-dom";
+
+
 const ProjectEditForm = ({ onUpdateProject }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -13,9 +16,10 @@ const ProjectEditForm = ({ onUpdateProject }) => {
   });
 
   const { name, about, phase, link, image } = formData;
+  const {id} = useParams()
 
   useEffect(() => {
-    fetch(`http://localhost:4000/projects/1`)
+    fetch(`http://localhost:4000/projects/${id}`)
       .then((res) => res.json())
       .then((project) => setFormData(project));
   }, []);
