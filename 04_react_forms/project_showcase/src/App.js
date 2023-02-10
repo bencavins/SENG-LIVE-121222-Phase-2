@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
 import ProjectList from "./components/ProjectList";
@@ -25,12 +25,25 @@ const App = () => {
       .then((projects) => setProjects(projects));
   };
 
+  // useEffect(callback, dependencyArray)
+  // 3 ways of using useEffect:
+  // useEffect({}) => does nothing special
+  // useEffect({}, []) => fire ONLY on the inital render
+  // useEffect({}, [some, vars]) => fire only if "vars" have been changed
+  useEffect(() => {
+    fetch("http://localhost:4000/projects")
+      .then((res) => res.json())
+      .then((projects) => setProjects(projects));
+  }, [])
+
   const onToggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   return (
     <div className={isDarkMode ? "App" : "App light"}>
       <Header isDarkMode={isDarkMode} onToggleDarkMode={onToggleDarkMode} />
-      <ProjectForm />
+      <ProjectForm
+        projects={projects}
+        setProjects={setProjects} />
       <button onClick={handleClick}>Load Projects</button>
       <ProjectList projects={projects} />
     </div>
