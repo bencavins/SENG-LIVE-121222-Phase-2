@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
 import ProjectList from "./components/ProjectList";
+import Timer from "./components/Timer";
 
 // Deliverable 1: Implement useEffect in App component 
 // to load projects
@@ -27,16 +28,34 @@ import ProjectList from "./components/ProjectList";
 const App = () => {
   const [projects, setProjects] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [x, setX] = useState(0)
+  const [isTimerVisible, setIsTimerVisible] = useState(false)
+
+  function toggleTimer() {
+    setIsTimerVisible(prevVal => !prevVal)
+  }
 
   const onAddProject = newProject => {
     const newProjectCollection = [...projects, newProject];
     setProjects(newProjectCollection);
   }
 
-  const handleClick = () => {
+  console.log('rendering...')
+
+  useEffect(() => {
+    console.log('side effect fired!')
     fetch("http://localhost:4000/projects")
       .then((res) => res.json())
       .then((projects) => setProjects(projects));
+  }, [x])
+
+  const handleClick = () => {
+    // fetch("http://localhost:4000/projects")
+    //   .then((res) => res.json())
+    //   .then((projects) => setProjects(projects));
+    // x.push(0)
+    // console.log(x)
+    setX(prev => prev+1)
   };
 
   const onToggleDarkMode = () => setIsDarkMode(!isDarkMode);
@@ -47,9 +66,12 @@ const App = () => {
 
   return (
     <div className={isDarkMode ? "App" : "App light"}>
+      <button 
+        onClick={toggleTimer}>{isTimerVisible ? 'Hide Timer' : 'Show Timer'}</button>
+      {isTimerVisible ? <Timer /> : null}
       <Header isDarkMode={isDarkMode} onToggleDarkMode={onToggleDarkMode} />
       <ProjectForm 
-        onAddProject={onAddProject} 
+        onAddProject={onAddProject}
         onError={onError}
         projects={projects}
       />
