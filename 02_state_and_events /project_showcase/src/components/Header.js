@@ -1,11 +1,12 @@
-const Header = () => {
+const Header = ({ handleClick, isDarkMode }) => {
+
   return (
     <header>
       <h1>
         <span className="logo">{"//"}</span>
         Project Showcase
       </h1>
-      <button>Dark Mode</button>
+      <button onClick={handleClick} >{isDarkMode ? "Light Mode" : "Dark Mode"}</button>
     </header>
   );
 }
