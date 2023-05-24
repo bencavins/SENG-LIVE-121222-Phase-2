@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
@@ -19,11 +19,38 @@ const App = () => {
   // and set the `projects` state to the value 
   // returned by the response
 
+  // fetch("http://localhost:4000/projects")
+  //   .then(resp => resp.json())
+  //   .then(data => setProjects(data))
+
+  // useEffect(() => {})
+  // runs the function before every single render always
+
+  // useEffect(() => {}, [])
+  // runs the function only before the first render
+
+  // useEffect(() => {}, [vars])
+  // runs the function only if the "vars" have changed
+
+  useEffect(() => {
+    fetch("http://localhost:4000/projects")
+    .then(resp => resp.json())
+    .then(data => setProjects(data))
+    console.log('hi')
+  }, [])
+
+
+  // function handleLoadProjects() {
+  //   fetch("http://localhost:4000/projects")
+  //   .then(resp => resp.json())
+  //   .then(data => setProjects(data))
+  // }
+
   return (
     <div className="App">
       <Header />
       <ProjectForm />
-      <button>Load Projects</button>
+      <button onClick={handleLoadProjects} >Load Projects</button>
       <ProjectList projects={projects} />
     </div>
   );
