@@ -36,20 +36,19 @@ const App = () => {
     fetch("http://localhost:4000/projects")
     .then(resp => resp.json())
     .then(data => setProjects(data))
-    console.log('hi')
   }, [])
 
 
-  // function handleLoadProjects() {
-  //   fetch("http://localhost:4000/projects")
-  //   .then(resp => resp.json())
-  //   .then(data => setProjects(data))
-  // }
+  function handleLoadProjects() {
+    fetch("http://localhost:4000/projects")
+    .then(resp => resp.json())
+    .then(data => setProjects(data))
+  }
 
   return (
     <div className="App">
       <Header />
-      <ProjectForm />
+      <ProjectForm setProjects={setProjects} />
       <button onClick={handleLoadProjects} >Load Projects</button>
       <ProjectList projects={projects} />
     </div>
