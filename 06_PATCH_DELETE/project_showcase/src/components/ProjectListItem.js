@@ -23,7 +23,7 @@
 import { useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
-const ProjectListItem = ({ project, enterProjectEditModeFor }) => {
+const ProjectListItem = ({ project, setProjects, enterProjectEditModeFor }) => {
   const { id, image, about, name, link, phase } = project;
 
   const [clapCount, setClapCount] = useState(0);
@@ -34,7 +34,17 @@ const ProjectListItem = ({ project, enterProjectEditModeFor }) => {
     enterProjectEditModeFor(id);
   };
 
-  const handleDeleteClick = () => {};
+  const handleDeleteClick = () => {
+    fetch(`http://localhost:4000/projects/${id}`, {
+      method: 'DELETE'
+    })
+    .then(resp => resp.json())
+    .then(() => setProjects(prevProjects => {
+      return prevProjects.filter(project => {
+        return project.id !== id
+      })
+    }))
+  };
 
   return (
     <li className="card">

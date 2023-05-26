@@ -38,6 +38,7 @@ const App = () => {
         <ProjectEditForm
           projectId={projectId}
           completeEditing={completeEditing}
+          setProjects={setProjects}
         />
       );
     } else {
@@ -51,6 +52,7 @@ const App = () => {
       {renderForm()}
       <ProjectList
         projects={projects}
+        setProjects={setProjects}
         enterProjectEditModeFor={enterProjectEditModeFor}
       />
     </div>

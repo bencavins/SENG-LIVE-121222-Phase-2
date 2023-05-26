@@ -22,7 +22,7 @@
 
 import { useState, useEffect } from "react";
 
-const ProjectEditForm = ({ projectId, completeEditing }) => {
+const ProjectEditForm = ({ projectId, setProjects, completeEditing }) => {
   const initialState = {
     name: "",
     about: "",
@@ -39,7 +39,7 @@ const ProjectEditForm = ({ projectId, completeEditing }) => {
     fetch(`http://localhost:4000/projects/${projectId}`)
       .then((res) => res.json())
       .then((project) => setFormData(project));
-  }, []);
+  }, [projectId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +48,29 @@ const ProjectEditForm = ({ projectId, completeEditing }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // Add code here
+    fetch(`http://localhost:4000/projects/${projectId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(resp => resp.json())
+    .then(editedProject => {
+      setProjects(prevProjects => {
+        return prevProjects.map(project => {
+
+          // return the edited project if the id matches
+          if (project.id === projectId) {
+            return editedProject
+
+          // otherwise just return the old project
+          } else {
+            return project
+          }
+        })
+      })
+    })
     completeEditing();
   }
 
