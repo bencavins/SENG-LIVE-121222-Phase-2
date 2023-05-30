@@ -2,12 +2,15 @@
 // to trigger appropriate GET requests
 
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const ProjectDetail = () => {
   const [claps, setClaps] = useState(0);
   const [project, setProject] = useState(null);
 
-  const id = 1;
+  const { id } = useParams()
+
+  // const id = 1;
 
   useEffect(() => {
     fetch(`http://localhost:4000/projects/${id}`)
@@ -16,6 +19,10 @@ const ProjectDetail = () => {
         setProject(project);
       });
   }, [id]);
+
+  if (!project) {
+    return <h3>Loading project...</h3>
+  }
 
   const { image, name, about, link, phase } = project;
 

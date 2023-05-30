@@ -3,6 +3,8 @@
 
 import { useEffect, useState } from "react";
 
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
 const Home = () => {
   const [recentProjects, setRecentProjects] = useState([]);
 
@@ -31,6 +33,7 @@ const Home = () => {
           View All Projects
         </a>
       </div>
+      <Link to="/project/new" >new project</Link>
     </section>
   );
 };
