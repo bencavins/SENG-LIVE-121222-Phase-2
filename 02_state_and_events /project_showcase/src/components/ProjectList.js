@@ -1,9 +1,26 @@
 import ProjectListItem from "./ProjectListItem";
 
-const ProjectList = ({ projects }) => {
+import { useState } from "react";
 
-  const projectListItems = projects.map((project) => (
+const ProjectList = ({ projects }) => {
+  const [search, setSearch] = useState("")
+
+  function handleChange(event) {
+    setSearch(event.target.value)
+  }
+
+  // create new filtered down projects array
+  const filteredProjects = projects.filter(project => {
+    // needs to return true or false
+    return project.name.toLowerCase().includes(
+      search.toLowerCase()
+    )
+  })
+
+  // map over filtered projects
+  const projectListItems = filteredProjects.map((project) => (
     <ProjectListItem key={project.id} {...project} />
+    // <ProjectListItem key={project.id} name={project.name} link={project.link} />
   ));
 
   return (
@@ -18,7 +35,10 @@ const ProjectList = ({ projects }) => {
         <button>Phase 2</button>
         <button>Phase 1</button>
       </div>
-      <input type="text" placeholder="Search..."/>
+      <input 
+        type="text" 
+        placeholder="Search..."
+        onChange={handleChange} />
 
       <ul className="cards">{projectListItems}</ul>
     </section>
