@@ -4,10 +4,20 @@ import ProjectList from "./components/ProjectList";
 
 import projects from "./projects";
 
+import { useState } from "react";
+
 const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true)
+
+  function handleClick(event) {
+    setIsDarkMode(prevVal => !prevVal)
+  }
+
   return (
-    <div className="App">
-      <Header />
+    <div className={isDarkMode ? "App" : "App light"}>
+      <Header 
+        isDarkMode={isDarkMode}
+        handleClick={handleClick} />
       <ProjectForm />
       <ProjectList projects={projects} />
     </div>
