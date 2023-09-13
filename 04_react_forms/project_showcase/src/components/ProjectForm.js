@@ -10,10 +10,33 @@
 
 // - Add an `onSubmit` event handler to the form
 
-const ProjectForm = () => {
+const ProjectForm = ({ setProjects }) => {
+  function handleSubmit(event) {
+    event.preventDefault()
+    
+    const newProject = {
+      "name": event.target.name.value,
+      "about": event.target.about.value,
+      "phase": event.target.phase.value,
+      "link": event.target.link.value,
+      "image": event.target.image.value
+    }
+    
+    // we need to make a copy of the array
+    // for react to recognize the change
+    // const newProjects = [newProject, ...projects]
+    // setProjects(newProjects)
+
+    // this prevents the race condition
+    setProjects(prevVal => [newProject, ...prevVal])
+  }
+
   return (
     <section>
-      <form className="form" autoComplete="off">
+      <form 
+        className="form" 
+        autoComplete="off"
+        onSubmit={handleSubmit}>
         <h3>Add New Project</h3>
 
         <label htmlFor="name">Name</label>
