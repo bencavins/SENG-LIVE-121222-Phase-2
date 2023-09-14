@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
 import ProjectList from "./components/ProjectList";
@@ -33,13 +33,20 @@ const App = () => {
     setProjects(newProjectCollection);
   }
 
-  const handleClick = () => {
+  // useEffect(arrow function, dependency array)
+  // useEffect(() => {})  // runs after every render
+  // useEffect(() => {}, [])  // runs only after first render
+  // useEffect(() => {}, [var1, var2])  // runs after render if vars have changed
+  useEffect(() => {
+    console.log('inside useEffect')
     fetch("http://localhost:4000/projects")
-      .then((res) => res.json())
-      .then((projects) => setProjects(projects));
-  };
+    .then((res) => res.json())
+    .then((data) => setProjects(data));
+  }, [])
 
-  const onToggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  function onToggleDarkMode() {
+    setIsDarkMode(prev => !prev);
+  }
 
   // Update "projects" State With Filtered List When Error Occurs
   // With POST Request
@@ -53,7 +60,6 @@ const App = () => {
         onError={onError}
         projects={projects}
       />
-      <button onClick={handleClick}>Load Projects</button>
       <ProjectList projects={projects} />
     </div>
   );
