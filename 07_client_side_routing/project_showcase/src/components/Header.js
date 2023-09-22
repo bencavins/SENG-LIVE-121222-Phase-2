@@ -5,6 +5,8 @@
 
   // - Demonstrate the difference between `Link` and `NavLink`
 
+  import { Link, NavLink } from 'react-router-dom'
+
   const Header = ({ isDarkMode, onToggleDarkMode }) => {
     const buttonTextContent = isDarkMode ? "Light Mode" : "Dark Mode";
   
@@ -16,12 +18,15 @@
             Project Showcase
           </h1>
           <div className="navigation">
-            <a className="button" href="/projects">
+            {/* <a className="button" href="/projects">
               All Projects
-            </a>
-            <a className="button" href="/projects/new">
+            </a> */}
+            <NavLink className="button" exact to="/projects">
+              All Projects
+            </NavLink>
+            <NavLink className="button" exact to="/projects/new">
               Add Project
-            </a>
+            </NavLink>
             <button onClick={onToggleDarkMode}>{buttonTextContent}</button>
           </div>
         </nav>
