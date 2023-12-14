@@ -1,30 +1,45 @@
-// Deliverable 1: Make the `ProjectForm` component a controlled component
+// Uncontrolled form setup steps:
+// 1. register submit event function
+// 2. grab the form data from the DOM (event.target.whatever.value, etc) when the submit fires
+// 3. POST the data to the DB
+// 4. render the new data on the page (add the data to state) 
 
-// - Initialize state for all the form fields found in the component
+// Controlled form setup:
+// 1. create state for the form data
+// 2a. register change events for *each* input on the form
+// 2b. the change events need to update the form data state
+// 2c. any updates to form data state should update the input on the page
+// 3. register a submit event when the form is submitted
+// 4. POST the form data to the DB
+// 5. render the new data on the page
 
-// - Add an `onChange` event to each field that will update state associated 
-// with the field that is interacted with
-
-// - Provide a `value` attribute to each form field that will return the 
-// associated piece of state
-
-// - Add an `onSubmit` event handler to the form
+import { useState } from "react";
 
 const ProjectForm = ({ projects, setProjects }) => {
+
+  const [formData, setFormData] = useState({
+    "name": "",
+    "about": "",
+    "phase": "",
+    "link": "",
+    "image": ""
+  })
+
+  function handleChange(event) {
+    console.log("event.target.name", event.target.name)
+    console.log("event.target.value", event.target.value)
+
+    // update this field in the formData obj
+    // formData[event.target.name] = event.target.value
+    setFormData({...formData, [event.target.name]: event.target.value})
+  }
+
   function handleSubmit(event) {
     event.preventDefault()
 
-    const newProject = {
-      "name": event.target.name.value,
-      "about": event.target.about.value,
-      "phase": event.target.phase.value,
-      "link": event.target.link.value,
-      "image": event.target.image.value
-    }
-
     fetch("http://localhost:4000/projects", {
       method: "POST",
-      body: JSON.stringify(newProject),
+      body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json"
       }
@@ -60,13 +75,13 @@ const ProjectForm = ({ projects, setProjects }) => {
         <h3>Add New Project</h3>
 
         <label htmlFor="name">Name</label>
-        <input type="text" id="name" name="name" />
+        <input type="text" id="name" name="name" onChange={handleChange} value={formData.name} />
 
         <label htmlFor="about">About</label>
-        <textarea id="about" name="about" />
+        <textarea id="about" name="about" onChange={handleChange} value={formData.about} />
 
         <label htmlFor="phase">Phase</label>
-        <select name="phase" id="phase">
+        <select name="phase" id="phase" onChange={handleChange} value={formData.phase}>
           <option>Select One</option>
           <option value="1">Phase 1</option>
           <option value="2">Phase 2</option>
@@ -76,10 +91,10 @@ const ProjectForm = ({ projects, setProjects }) => {
         </select>
 
         <label htmlFor="link">Project Homepage</label>
-        <input type="text" id="link" name="link" />
+        <input type="text" id="link" name="link" onChange={handleChange} value={formData.link} />
 
         <label htmlFor="image">Screenshot</label>
-        <input type="text" id="image" name="image" />
+        <input type="text" id="image" name="image" onChange={handleChange} value={formData.image} />
 
         <button type="submit">Add Project</button>
       </form>
