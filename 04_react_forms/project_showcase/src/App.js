@@ -22,7 +22,7 @@ const App = () => {
   const handleClick = () => {
     fetch("http://localhost:4000/projects")
       .then((res) => res.json())
-      .then((projects) => setProjects(projects));
+      .then((respData) => setProjects(respData));
   };
 
   const onToggleDarkMode = () => setIsDarkMode(!isDarkMode);
@@ -30,7 +30,7 @@ const App = () => {
   return (
     <div className={isDarkMode ? "App" : "App light"}>
       <Header isDarkMode={isDarkMode} onToggleDarkMode={onToggleDarkMode} />
-      <ProjectForm />
+      <ProjectForm projects={projects} setProjects={setProjects} />
       <button onClick={handleClick}>Load Projects</button>
       <ProjectList projects={projects} />
     </div>

@@ -12,7 +12,9 @@ const ProjectList = ({ projects }) => {
     <ProjectListItem key={project.id} {...project} />
   ));
 
-  const handleOnChange = (e) => setSearchQuery(e.target.value);
+  function handleOnChange(e) {
+    setSearchQuery(e.target.value)
+  };
 
   return (
     <section>
