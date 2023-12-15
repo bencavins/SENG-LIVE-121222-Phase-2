@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
 import ProjectList from "./components/ProjectList";
@@ -28,15 +28,27 @@ const App = () => {
   const [projects, setProjects] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(true);
 
+  useEffect(() => {
+    fetch("http://localhost:4000/projects")
+    .then((res) => res.json())
+    .then((projects) => setProjects(projects));
+    console.log('in useEffect')
+  }, [])
+
+  // useEffect(() => {})   // always runs code after any render
+  // useEffect(() => {}, [])  // only runs code after first render
+  // useEffect(() => {}, [var1, var2])  // runs if the vars in the array have changed
+
+  console.log(projects)
+
   const onAddProject = newProject => {
     const newProjectCollection = [...projects, newProject];
     setProjects(newProjectCollection);
   }
+  
+
 
   const handleClick = () => {
-    fetch("http://localhost:4000/projects")
-      .then((res) => res.json())
-      .then((projects) => setProjects(projects));
   };
 
   const onToggleDarkMode = () => setIsDarkMode(!isDarkMode);
