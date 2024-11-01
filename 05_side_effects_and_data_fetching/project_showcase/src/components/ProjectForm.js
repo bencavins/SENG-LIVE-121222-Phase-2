@@ -28,16 +28,16 @@ const ProjectForm = ({ onAddProject, onError, projects }) => {
     // Update "projects" State with Newest Project Before POST 
     onAddProject(formData);
 
-    const requestObj = {
+    // const requestObj = 
+
+
+    fetch("http://localhost:4000/projects", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(formData)
-    }
-
-
-    fetch("http://localhost:4000/projects", requestObj)
+    })
       .then(res => res.json())
       .then(newProject => {
         
