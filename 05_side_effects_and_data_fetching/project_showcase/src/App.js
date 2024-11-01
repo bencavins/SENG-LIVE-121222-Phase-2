@@ -42,9 +42,9 @@ const App = () => {
   useEffect(() => {
     console.log('in useEffect')
     fetch("http://localhost:4000/projects")
-        .then((res) => res.json())
-        .then((projects) => setProjects(projects));
-      }, [])
+      .then((res) => res.json())
+      .then((projects) => setProjects(projects));
+    }, [])
       
   useEffect(() => {
     console.log('another useEffect')
