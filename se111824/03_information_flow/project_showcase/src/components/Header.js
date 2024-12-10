@@ -1,9 +1,6 @@
 import { useState } from "react";
 
-const Header = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  const handleClick = () => setIsDarkMode(!isDarkMode);
+const Header = ({ isDarkMode, handleClick, projects }) => {
 
   const buttonTextContent = isDarkMode ? "Light Mode" : "Dark Mode";
 
@@ -25,7 +22,7 @@ const Header = () => {
     <header>
       <h1>
         <span className="logo">{"//"}</span>
-        Project Showcase
+        Total Projects: {projects.length}
       </h1>
       <button onClick={handleClick}>{buttonTextContent}</button>
     </header>

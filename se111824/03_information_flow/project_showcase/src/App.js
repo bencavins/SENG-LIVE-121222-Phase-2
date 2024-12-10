@@ -1,11 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
 import ProjectList from "./components/ProjectList";
 
+
 const App = () => {
   const [projects, setProjects] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  function handleDarkModeButtonClick() {
+    setIsDarkMode(!isDarkMode);
+  }
+
+  function handleFilterInputChange(e) {
+    setSearchQuery(e.target.value);
+  }
+
+  function loadProjectData() {
+    fetch('http://localhost:4000/projects')
+    .then(resp => resp.json())
+    .then(jsonData => setProjects(jsonData))
+  }
+
+  const searchResults = projects.filter((project) => {
+    return project.name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:4000/projects')
+    .then(resp => resp.json())
+    .then(jsonData => setProjects(jsonData))
+  }, [])
 
   // # Deliverable 1: Configure a <button> in our App 
   // that will use json-server to fetch projects 
@@ -19,12 +46,20 @@ const App = () => {
   // and set the `projects` state to the value 
   // returned by the response
 
+
   return (
-    <div className="App">
-      <Header />
+    <div className={isDarkMode ? "App" : "App light"}>
+      <Header 
+        isDarkMode={isDarkMode} 
+        setIsDarkMode={setIsDarkMode} 
+        handleClick={handleDarkModeButtonClick}
+        projects={searchResults} />
       <ProjectForm />
-      <button>Load Projects</button>
-      <ProjectList projects={projects} />
+      <button onClick={loadProjectData}>Load Projects</button>
+      <ProjectList 
+        projects={searchResults} 
+        handleClick={handleDarkModeButtonClick}
+        handleChange={handleFilterInputChange} />
     </div>
   );
 };
