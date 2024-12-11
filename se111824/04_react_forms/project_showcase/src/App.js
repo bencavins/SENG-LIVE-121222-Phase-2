@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
+import ProjectFormControlled from "./components/ProjectFormControlled"
 import ProjectList from "./components/ProjectList";
 
 // Deliverable 2: Handle submitting the form and update state in parent 
@@ -30,7 +31,8 @@ const App = () => {
   return (
     <div className={isDarkMode ? "App" : "App light"}>
       <Header isDarkMode={isDarkMode} onToggleDarkMode={onToggleDarkMode} />
-      <ProjectForm />
+      <ProjectForm setProjects={setProjects} />
+      {/* <ProjectFormControlled setProjects={setProjects} /> */}
       <button onClick={handleClick}>Load Projects</button>
       <ProjectList projects={projects} />
     </div>

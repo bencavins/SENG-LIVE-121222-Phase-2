@@ -10,10 +10,54 @@
 
 // - Add an `onSubmit` event handler to the form
 
-const ProjectForm = () => {
+const ProjectForm = ({ setProjects }) => {
+
+  function handleSubmit(event) {
+    // prevent the page refresh from happening
+    event.preventDefault()
+    // grab the data from the form
+    const newProject = {
+      // "id": 1,
+      "name": event.target.name.value,
+      "about": event.target.about.value,
+      "phase": parseInt(event.target.phase.value),
+      "link": event.target.link.value,
+      "image": event.target.image.value
+    }
+    // this doesn't work! arrays and objects need to be copied when updating state
+    // projects.push(newProject)
+    // setProjects(projects)
+
+    // make a copy of the existing projects array
+    // this works but can be done in one line
+    // const projectsCopy = [...projects]
+    // // add our new project to the copy
+    // projectsCopy.push(newProject)
+    // // update state
+    // setProjects(projectsCopy)
+
+    // copy existing projects, add new project to the end, update state
+    // setProjects(existingProjects => [...existingProjects, newProject])
+
+    // add the new project to the database
+    fetch('http://localhost:4000/projects', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newProject)
+    })
+    .then(resp => resp.json())
+    .then(jsonData => {
+      // wait for a response from the db before updating state
+      // db will give us ids
+      setProjects(existingProjects => [...existingProjects, jsonData])
+    })
+  }
+
   return (
     <section>
-      <form className="form" autoComplete="off">
+      <form className="form" autoComplete="off" onSubmit={handleSubmit}>
         <h3>Add New Project</h3>
 
         <label htmlFor="name">Name</label>
