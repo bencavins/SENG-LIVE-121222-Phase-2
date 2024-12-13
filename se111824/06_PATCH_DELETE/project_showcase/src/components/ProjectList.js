@@ -1,7 +1,7 @@
 import ProjectListItem from "./ProjectListItem";
 import { useState } from "react";
 
-const ProjectList = ({ projects, enterProjectEditModeFor }) => {
+const ProjectList = ({ projects, enterProjectEditModeFor, setProjects }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const searchResults = projects.filter((project) => {
@@ -14,6 +14,7 @@ const ProjectList = ({ projects, enterProjectEditModeFor }) => {
         key={project.id}
         project={project}
         enterProjectEditModeFor={enterProjectEditModeFor}
+        setProjects={setProjects}
       />
     );
   });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ProjectForm from "./components/ProjectForm";
 import ProjectList from "./components/ProjectList";
@@ -32,6 +32,23 @@ const App = () => {
     const newProjectCollection = [...projects, newProject];
     setProjects(newProjectCollection);
   }
+
+  // useEffect takes 2 args:
+  //   1. a function (usually an arrow function)
+  //   2. a dependency array
+  // code in the function will run *after* the component renders
+  useEffect(() => {
+    console.log('in useEffect')
+    fetch("http://localhost:4000/projects")
+    .then((res) => res.json())
+    .then((projects) => setProjects(projects));
+  }, [])
+
+  // useEffect(() => {}) // useEffect function gets run after every single render
+  // useEffect(() => {}, [])  // useEffect function runs only after the very first render
+  // useEffect(() => {}, [someVar, anotherVar])  // useEffect runs after a render only if one of the vars has changed
+
+  console.log('rendering App component')
 
   const handleClick = () => {
     fetch("http://localhost:4000/projects")
